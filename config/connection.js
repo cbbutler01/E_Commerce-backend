@@ -3,7 +3,7 @@ require('dotenv').config();
 const Sequelize = require('sequelize');
 
 const {
-  DB_NAME = 'techblog_db',
+  DB_NAME = 'ecommerce_db',
   DB_USER = 'postgres',
   DB_PASSWORD = 'Bzavion18#',
   DB_URL
@@ -17,6 +17,7 @@ const sequelize = DB_URL
       dialectOptions: {
         decimalNumbers: true,
       },
+      logging: console.log
     });
 
 module.exports = sequelize;

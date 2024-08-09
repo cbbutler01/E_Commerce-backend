@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     const products = Product.findAll({
       include: [
         { model: Category },
-        { model: Tag, through: ProductTag }
+        { model: Tag, through: ProductTag, as: 'productTag_products' }
       ]
     });
     res.status(200).json(products);
@@ -22,14 +22,14 @@ router.get('/', (req, res) => {
 });
 
 // get one product
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
   try {
-    const product = Product.findByPk(req.params.id, {
+    const product = await Product.findByPk(req.params.id, {
       include: [
         { model: Category },
-        { model: Tag, through: ProductTag }
+        { model: Tag, through: ProductTag, as: 'productTag_products' }
       ]
     });
 
@@ -121,10 +121,10 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
   try {
-    const product = Product.destroy({
+    const product = await Product.destroy({
       where: { id: req.params.id }
     });
 
